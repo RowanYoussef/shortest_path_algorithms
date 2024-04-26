@@ -11,6 +11,7 @@ public class Dijkstra {
     public void solveDijkstra(int src, int[][] parent, double[][] cost, List<Edge>[] adjList){
        init(cost,adjList.length,parent,src);
        cost[src][src] = 0;
+        //minHeap to reduce complexity
         PriorityQueue<Edge> pq = new PriorityQueue<>((p1, p2) -> Double.compare(p1.getCost(), p2.getCost()));
         pq.add(new Edge(src,0));
         while(!pq.isEmpty()){
@@ -31,6 +32,8 @@ public class Dijkstra {
 
         }
     }
+
+    //initialize arrays
     private void init(double[][] cost,int n,int[][] parent,int src){
         Arrays.fill(cost[src],Double.MAX_VALUE);
         Arrays.fill(parent[src],-1);
