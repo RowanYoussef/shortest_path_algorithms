@@ -39,25 +39,35 @@ public class Graph {
             }
 
         }
+
         private void initArrays(){
         costs = new double[v][v];
         predecessor = new int[v][v];
         }
+
         public int getSize(){
         return v;
         }
+
+        //solve dijkstra for one node
         public void solveDijkstra(int src){
             Dijkstra d = new Dijkstra();
             d.solveDijkstra(src,predecessor,costs,adjList);
         }
+
+        //solve dijkstra for all nodes
         public void solveDijkstraAll(){
             Dijkstra d = new Dijkstra();
             for(int i = 0;i < v;i++)
                 d.solveDijkstra(i,predecessor,costs,adjList);
         }
+
+        //get the cost from one node to another
         public double getDistance(int src,int dest) {
             return costs[src][dest];
         }
+
+        //get the parents of a node
         public String getParents(int src,int dest){
         String s = "";
         int x = dest;
