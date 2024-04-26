@@ -1,5 +1,6 @@
 package models;
 
+import algorithms.BellmanFord;
 import algorithms.Dijkstra;
 
 import java.io.BufferedReader;
@@ -18,6 +19,8 @@ public class Graph {
        init(file);
        initArrays();
     }
+
+    //read the input file
     private void init(String file)  {
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             String[] ve = reader.readLine().split(" ");
@@ -55,11 +58,30 @@ public class Graph {
             d.solveDijkstra(src,predecessor,costs,adjList);
         }
 
+        //solve bellmanFord for one node
+        public void solveBellmanFord(int src){
+            BellmanFord b = new BellmanFord(adjList);
+            b.solveBellmanFord(src,predecessor,costs);
+        }
+
         //solve dijkstra for all nodes
         public void solveDijkstraAll(){
             Dijkstra d = new Dijkstra();
             for(int i = 0;i < v;i++)
                 d.solveDijkstra(i,predecessor,costs,adjList);
+        }
+
+        //solve bellmanFord for all nodes
+        public void solveBellmanFordAll(){
+            BellmanFord b = new BellmanFord(adjList);
+            for(int i =0;i < v;i++)
+             b.solveBellmanFord(i,predecessor,costs);
+        }
+
+        //check if the graph contains negative cycles
+        public boolean containsCycles(){
+          BellmanFord b = new BellmanFord(adjList);
+          return b.negativeCycle(costs,predecessor);
         }
 
         //get the cost from one node to another
