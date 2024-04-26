@@ -1,5 +1,7 @@
 package models;
 
+import algorithms.Dijkstra;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -9,7 +11,7 @@ public class Graph {
     private int v;
     private int e;
     private List<Edge>[] adjList;
-    private List<Integer>[] predecessor;
+    private int [][] predecessor;
     private double[][] costs;
 
     public Graph(String file){
@@ -38,22 +40,33 @@ public class Graph {
 
         }
         private void initArrays(){
-            //initialize costs array with max value
-            costs = new double[v][v];
-            for (int i = 0; i < v; i++) {
-                for (int j = 0; j < v; j++) {
-                    if(i != j)
-                        costs[i][j] = Double.MAX_VALUE;
-                    else costs[i][j] = 0;
-                }
-            }
-            //initialize parent array
-            predecessor = new ArrayList[v];
-            for (int i = 0; i < v; i++)
-                predecessor[i] = new ArrayList<>();
+        costs = new double[v][v];
+        predecessor = new int[v][v];
         }
         public int getSize(){
         return v;
+        }
+        public void solveDijkstra(int src){
+            Dijkstra d = new Dijkstra();
+            d.solveDijkstra(src,predecessor,costs,adjList);
+        }
+        public void solveDijkstraAll(){
+            Dijkstra d = new Dijkstra();
+            for(int i = 0;i < v;i++)
+                d.solveDijkstra(i,predecessor,costs,adjList);
+        }
+        public double getDistance(int src,int dest) {
+            return costs[src][dest];
+        }
+        public String getParents(int src,int dest){
+        String s = "";
+        int x = dest;
+        while(x != -1){
+            s += x;
+            if(x != src) s+= "->";
+            x = predecessor[src][x];
+        }
+            return s;
         }
         //print the graph
         public void print(){
