@@ -20,9 +20,9 @@ public class Dijkstra {
             double nodeCost = e.getCost();
             visited[node] = true;
             if(nodeCost > cost[src][node]) continue;
-            for(int i = 0;i < adjList[node].size(); i++){
-                int x = adjList[node].get(i).getDest();
-                double dis = adjList[node].get(i).getCost();
+            for(Edge edge : adjList[node]){
+                int x = edge.getDest();
+                double dis = edge.getCost();
                 if(!visited[x] && (dis+cost[src][node]) < cost[src][x]){
                    cost[src][x] = dis+cost[src][node];
                    parent[src][x] = node;
