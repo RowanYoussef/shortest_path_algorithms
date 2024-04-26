@@ -7,9 +7,11 @@ import java.util.List;
 
 public class BellmanFord {
     private List<Edge>[] adjList;
+
     public BellmanFord(List<Edge>[] adjList){
         this.adjList = adjList;
     }
+    
     public void solveBellmanFord(int src, int[][] parent, double[][] cost) {
         init(cost,parent,src);
         int v = adjList.length;

@@ -8,6 +8,7 @@ import java.util.PriorityQueue;
 
 public class Dijkstra {
     private boolean[] visited;
+
     public void solveDijkstra(int src, int[][] parent, double[][] cost, List<Edge>[] adjList){
        init(cost,adjList.length,parent,src);
        cost[src][src] = 0;
