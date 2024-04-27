@@ -11,7 +11,7 @@ public class BellmanFord {
     public BellmanFord(List<Edge>[] adjList){
         this.adjList = adjList;
     }
-    
+
     public void solveBellmanFord(int src, int[][] parent, double[][] cost) {
         init(cost,parent,src);
         int v = adjList.length;
@@ -40,7 +40,7 @@ public class BellmanFord {
         solveBellmanFord(0,parent,cost);
         for (int i = 0; i < adjList.length ; i++) {
             for (Edge edge : adjList[i]) {
-                if (cost[0][i] != Integer.MAX_VALUE && cost[0][i] + edge.getCost() < cost[0][edge.getDest()])
+                if (cost[0][i] != Double.MAX_VALUE && cost[0][i] + edge.getCost() < cost[0][edge.getDest()])
                     return true;
             }
         }
