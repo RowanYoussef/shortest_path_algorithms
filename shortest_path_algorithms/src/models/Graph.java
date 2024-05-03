@@ -2,6 +2,7 @@ package models;
 
 import algorithms.BellmanFord;
 import algorithms.Dijkstra;
+import algorithms.FloydWarshall;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -78,15 +79,34 @@ public class Graph {
              b.solveBellmanFord(i,predecessor,costs);
         }
 
+        public void solveFloydWarshall() {
+            FloydWarshall floydWarshall = new FloydWarshall(adjList);
+            floydWarshall.solve(costs, predecessor);
+        }
+
         //check if the graph contains negative cycles
-        public boolean containsCycles(){
+        public boolean containsCyclesBellmanFord(){
           BellmanFord b = new BellmanFord(adjList);
           return b.negativeCycle(costs,predecessor);
+        }
+
+        public boolean containsCyclesFloydWarshall() {
+            FloydWarshall f = new FloydWarshall(adjList);
+            f.solve(costs, predecessor);
+            return f.containsNegativeCycle(costs);
         }
 
         //get the cost from one node to another
         public double getDistance(int src,int dest) {
             return costs[src][dest];
+        }
+
+        public double[] getDistanceToAllDest(int src) {
+            return costs[src];
+        }
+
+        public double[][] getAllCosts() {
+            return costs;
         }
 
         //get the parents of a node
