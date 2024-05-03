@@ -43,7 +43,7 @@ public class FloydWarshall {
             }
         }
     }
-    public void solve(double[][] costs, int[][] predecessors) {
+    public boolean solve(double[][] costs, int[][] predecessors) {
 
         init(costs, predecessors);
         int n = costs.length;
@@ -71,6 +71,8 @@ public class FloydWarshall {
 //                System.out.println();
 //            }
         }
+
+        return !containsNegativeCycle(costs);
     }
 
     public boolean containsNegativeCycle(double[][] solvedCosts) {
