@@ -14,11 +14,12 @@ public class Graph {
     private int e;
     private List<Edge>[] adjList;
     private int [][] predecessor;
+    private int [] predecessor1;
     private double[][] costs;
+    private double[] costs1;
 
     public Graph(String file){
        init(file);
-       initArrays();
     }
 
     //read the input file
@@ -49,6 +50,11 @@ public class Graph {
         predecessor = new int[v][v];
         }
 
+        private void initArrays1(){
+        costs1 = new double[v];
+        predecessor1 = new int[v];
+        }
+
         public int getSize(){
             return v;
         }
@@ -57,30 +63,51 @@ public class Graph {
             return e;
         }
 
-        //solve dijkstra for one node
-        public void solveDijkstra(int src){
-            Dijkstra d = new Dijkstra();
-            d.solveDijkstra(src,predecessor,costs,adjList);
+        //solve for one node
+        public void solveForOne(int src,String algorithm){
+         switch(algorithm){
+            case "1"-> {
+                initArrays1();
+                Dijkstra d = new Dijkstra(adjList);
+                d.solveDijkstra(src,predecessor1,costs1);
+                break;
+            }
+            case "2"-> {
+                initArrays1();
+                BellmanFord b = new BellmanFord(adjList);
+                b.solveBellmanFord(src,predecessor1,costs1);
+                break;
+            }
+            case "3"-> {
+                initArrays();
+                FloydWarshall f = new FloydWarshall(adjList);
+                f.solve(costs,predecessor);
+                break;
+            }
+         }
         }
-
-        //solve bellmanFord for one node
-        public void solveBellmanFord(int src){
-            BellmanFord b = new BellmanFord(adjList);
-            b.solveBellmanFord(src,predecessor,costs);
-        }
-
-        //solve dijkstra for all nodes
-        public void solveDijkstraAll(){
-            Dijkstra d = new Dijkstra();
-            for(int i = 0;i < v;i++)
-                d.solveDijkstra(i,predecessor,costs,adjList);
-        }
-
-        //solve bellmanFord for all nodes
-        public void solveBellmanFordAll(){
-            BellmanFord b = new BellmanFord(adjList);
-            for(int i =0;i < v;i++)
-             b.solveBellmanFord(i,predecessor,costs);
+        //solve for all nodes
+        public void solveForAll(String algorithm) {
+            initArrays();
+            switch (algorithm) {
+                case "1" -> {
+                    Dijkstra d = new Dijkstra(adjList);
+                    for (int i = 0; i < v; i++)
+                        d.solveDijkstraAll(i, predecessor, costs);
+                    break;
+                }
+                case "2" -> {
+                    BellmanFord b = new BellmanFord(adjList);
+                    for(int i =0;i < v;i++)
+                        b.solveBellmanFordAll(i,predecessor,costs);
+                    break;
+                }
+                case "3"-> {
+                    FloydWarshall f = new FloydWarshall(adjList);
+                    f.solve(costs,predecessor);
+                    break;
+                }
+            }
         }
 
         public void solveFloydWarshall() {
@@ -89,15 +116,17 @@ public class Graph {
         }
 
         //check if the graph contains negative cycles
-        public boolean containsCyclesBellmanFord(){
-          BellmanFord b = new BellmanFord(adjList);
-          return b.negativeCycle(costs,predecessor);
-        }
-
-        public boolean containsCyclesFloydWarshall() {
-            FloydWarshall f = new FloydWarshall(adjList);
-            f.solve(costs, predecessor);
-            return f.containsNegativeCycle(costs);
+        public boolean containsCycles(String algorithm){
+         if(algorithm.equals("1")) {
+             initArrays1();
+             BellmanFord b = new BellmanFord(adjList);
+             return !(b.solveBellmanFord(0, predecessor1, costs1));
+         }
+         else  {
+             initArrays();
+             FloydWarshall f = new FloydWarshall(adjList);
+             return !(f.solve(costs,predecessor));
+         }
         }
 
         //get the cost from one node to another
@@ -114,15 +143,30 @@ public class Graph {
         }
 
         //get the parents of a node
-        public String getParents(int src,int dest){
-        String s = "";
+        public String getParentsAll(int src,int dest){
+        String s = "",reversed = "";
         int x = dest;
         while(x != -1){
             s += x;
-            if(x != src) s+= "->";
+            if(x != src) s+= "-";
             x = predecessor[src][x];
         }
-            return s;
+            for(int i=s.length()-1;i >= 0;i--)
+                reversed += s.charAt(i);
+            return reversed;
+        }
+
+       public String getParents(int src,int dest){
+         String s = "",reversed = "";
+         int x = dest;
+         while(x != -1) {
+             s += x;
+             if (x != src) s += "-";
+             x = predecessor1[x];
+         }
+         for(int i=s.length()-1;i >= 0;i--)
+             reversed += s.charAt(i);
+        return reversed;
         }
         //print the graph
         public void print(){
