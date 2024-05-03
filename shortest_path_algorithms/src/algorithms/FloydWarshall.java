@@ -29,7 +29,8 @@ public class FloydWarshall {
 
             // Set the costs of the edges
             for (Edge edge : adjList[i]) {
-                initialCosts[i][edge.getDest()] = edge.getCost();
+                if(edge.getCost() < initialCosts[i][edge.getDest()])
+                    initialCosts[i][edge.getDest()] = edge.getCost();
             }
         }
     }
@@ -39,7 +40,7 @@ public class FloydWarshall {
         for(int i = 0; i < costs.length; i++) {
             for(int j = 0; j < costs.length; j++) {
                 costs[i][j] = initialCosts[i][j];
-                predecessors[i][j] = i;
+                predecessors[i][j] = (i == j) ? -1 : i;
             }
         }
     }
@@ -86,36 +87,17 @@ public class FloydWarshall {
     }
 
     public void printShortestPath(int src, int dest, int[][] predecessors, double[][] solvedCosts) {
-        List<Integer> path = new ArrayList<>();
-        List<Double> edgeCosts = new ArrayList<>();
-        for (int at = dest; at != src; at = predecessors[src][at]) {
-            if (at == -1) {
-                System.out.println("There is no path from node " + src + " to node " + dest);
-                return;
-            }
-            path.add(at);
-            edgeCosts.add(initialCosts[predecessors[src][at]][at]);
+        String s = "",reversed = "";
+        int x = dest;
+        while(x != -1){
+            s += x;
+            if(x != src) s+= "-";
+            x = predecessors[src][x];
         }
-        path.add(src);
-        // reverse the path
-        for(int i = 0; i < path.size() / 2; i++) {
-            int temp = path.get(i);
-            path.set(i, path.get(path.size() - i - 1));
-            path.set(path.size() - i - 1, temp);
-        }
+        for(int i=s.length()-1;i >= 0;i--)
+            reversed += s.charAt(i);
 
-        System.out.println("Shortest path is: " + path);
-        System.out.println("Cost of the path is: " + edgeCosts);
-        double sum = 0;
-        for (double cost : edgeCosts) {
-            sum += cost;
-        }
-        System.out.println("Total cost is: " + sum + " while the calculated cost is: " + solvedCosts[src][dest]);
-
-        if(sum != solvedCosts[src][dest]) {
-            System.out.println("The calculated cost is not equal to the sum of the edge costs. Perhaps there is a negative cycle.");
-        }
-
+        System.out.println(reversed + " with cost " + solvedCosts[src][dest]);
     }
 
 
@@ -128,8 +110,8 @@ public class FloydWarshall {
         }
         adjList[0].add(new Edge(1, 1));
         adjList[1].add(new Edge(2, 1));
-        adjList[2].add(new Edge(3, -1));
-        adjList[3].add(new Edge(4, -10));
+        adjList[2].add(new Edge(3, 1));
+        adjList[3].add(new Edge(4, 10));
         adjList[4].add(new Edge(0, 1));
 
         FloydWarshall floydWarshall = new FloydWarshall(adjList);
