@@ -24,26 +24,27 @@ public class Cli {
                                 String algorithm = sc.nextLine();
                                 if (algorithm.equals("4")) break;
                                 else if (algorithm.equals("1") || algorithm.equals("2") || algorithm.equals("3")) {
-                                    int src = sc.nextInt();
+                                    System.out.println("enter the source node");
+                                    int src = Integer.parseInt(sc.nextLine());
                                     if(src < g.getSize()) {
                                         boolean notCycle = g.solveForOne(src, algorithm);
                                         while(true) {
                                             System.out.println("do you want a path or a cost to a node?"+"\n"
-                                                    +"1->path"+"\n"+"2->cost"+"3->exit");
+                                                    +"1->path"+"\n"+"2->cost"+"\n"+"3->exit");
                                             String input = sc.nextLine();
                                             if(input.equals("3")) break;
                                             else {
                                                 switch (input) {
                                                     case "1" -> {
                                                         System.out.println("enter the destination");
-                                                        int dest = sc.nextInt();
+                                                        int dest = Integer.parseInt(sc.nextLine());
                                                         if(notCycle)
                                                         System.out.println("path from " + src + " to " + dest + " = " + g.getParents(src, dest));
                                                         else System.out.println("graph contains a negative cycle we couldn't find the right path");
                                                     }
                                                     case "2" -> {
                                                         System.out.println("enter the destination");
-                                                        int dest = sc.nextInt();
+                                                        int dest = Integer.parseInt(sc.nextLine());
                                                         System.out.println("cost from " + src + " to " + dest + " = " + g.getDistance(dest));
                                                         break;
                                                     }
@@ -68,27 +69,29 @@ public class Cli {
                                     boolean notCycle = g.solveForAll(algorithm);
                                     while(true) {
                                         System.out.println("do you want a path or a cost from one node to another?"+"\n"
-                                                +"1->path"+"\n"+"2->cost"+"3->exit");
+                                                +"1->path"+"\n"+"2->cost"+"\n"+"3->exit");
                                         String input = sc.nextLine();
                                         if(input.equals("3")) break;
                                         else {
                                             switch (input) {
                                                 case "1" -> {
+                                                    System.out.println("enter the source");
+                                                    int src = Integer.parseInt(sc.nextLine());
                                                     System.out.println("enter the destination");
-                                                    int src = sc.nextInt();
-                                                    int dest = sc.nextInt();
+                                                    int dest = Integer.parseInt(sc.nextLine());
                                                     if(src >= g.getSize() || dest >= g.getSize()){
                                                         System.out.println("node is not found");
                                                         break;
                                                     }
                                                     if(notCycle)
-                                                    System.out.println("path from " + src + "to" + dest + "=" + g.getParentsAll(src, dest));
+                                                    System.out.println("path from " + src + " to " + dest + " = " + g.getParentsAll(src, dest));
                                                     else System.out.println("graph contains a negative cycle we couldn't find the right path");
                                                 }
                                                 case "2" -> {
+                                                    System.out.println("enter the source");
+                                                    int src = Integer.parseInt(sc.nextLine());
                                                     System.out.println("enter the destination");
-                                                    int src = sc.nextInt();
-                                                    int dest = sc.nextInt();
+                                                    int dest = Integer.parseInt(sc.nextLine());
                                                     if(src >= g.getSize() || dest >= g.getSize()){
                                                         System.out.println("node is not found");
                                                         break;
