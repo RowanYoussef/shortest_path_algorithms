@@ -64,50 +64,51 @@ public class Graph {
         }
 
         //solve for one node
-        public void solveForOne(int src,String algorithm){
+        public boolean solveForOne(int src,String algorithm){
          switch(algorithm){
             case "1"-> {
                 initArrays1();
                 Dijkstra d = new Dijkstra(adjList);
                 d.solveDijkstra(src,predecessor1,costs1);
-                break;
+                return true;
             }
             case "2"-> {
                 initArrays1();
                 BellmanFord b = new BellmanFord(adjList);
-                b.solveBellmanFord(src,predecessor1,costs1);
-                break;
+                return b.solveBellmanFord(src,predecessor1,costs1);
             }
             case "3"-> {
                 initArrays();
                 FloydWarshall f = new FloydWarshall(adjList);
-                f.solve(costs,predecessor);
-                break;
+                return f.solve(costs,predecessor);
             }
          }
+         return true;
         }
         //solve for all nodes
-        public void solveForAll(String algorithm) {
+        public boolean solveForAll(String algorithm) {
             initArrays();
             switch (algorithm) {
                 case "1" -> {
                     Dijkstra d = new Dijkstra(adjList);
                     for (int i = 0; i < v; i++)
-                        d.solveDijkstraAll(i, predecessor, costs);
-                    break;
+                       d.solveDijkstraAll(i, predecessor, costs);
+                    return true;
                 }
                 case "2" -> {
+                    boolean notCycle = true;
                     BellmanFord b = new BellmanFord(adjList);
-                    for(int i =0;i < v;i++)
+                    notCycle = b.solveBellmanFordAll(0,predecessor,costs);
+                    for(int i =1;i < v;i++)
                         b.solveBellmanFordAll(i,predecessor,costs);
-                    break;
+                    return notCycle;
                 }
                 case "3"-> {
                     FloydWarshall f = new FloydWarshall(adjList);
-                    f.solve(costs,predecessor);
-                    break;
+                    return f.solve(costs,predecessor);
                 }
             }
+            return true;
         }
 
         //check if the graph contains negative cycles
