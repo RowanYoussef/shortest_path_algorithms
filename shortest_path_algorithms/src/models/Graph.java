@@ -50,7 +50,11 @@ public class Graph {
         }
 
         public int getSize(){
-        return v;
+            return v;
+        }
+
+        public int getEdges() {
+            return e;
         }
 
         //solve dijkstra for one node
