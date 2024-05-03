@@ -10,6 +10,6 @@ public class BellmanFordCorrectness9 {
 
     @Test
     void has_negative_cycle() {
-        assertTrue(graph.containsCyclesBellmanFord());
+        assertTrue(graph.containsCycles("1"));
     }
 }

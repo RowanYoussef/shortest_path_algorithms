@@ -35,11 +35,11 @@ public class DijkstraEfficiency2 {
 
     @Test
     public void all_nodes() {
-        graph.solveDijkstraAll();
+        graph.solveForAll("1");
     }
 
     @Before
-    public void batchInsertAll() {
+    public void beforeEach() {
         time = System.nanoTime();
     }
 

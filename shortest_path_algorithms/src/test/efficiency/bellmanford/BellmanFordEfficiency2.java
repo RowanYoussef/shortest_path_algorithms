@@ -11,15 +11,17 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import java.util.Scanner;
 
 @RunWith(Parameterized.class)
-public class BellmanFordEfficiency1 {
+public class BellmanFordEfficiency2 {
     private final Graph graph;
-    private final Random random = new Random();
-    private long time;
+    private long time = System.nanoTime();
 
-    public BellmanFordEfficiency1(String filepath) {
+    public BellmanFordEfficiency2(String filepath) {
         graph = new Graph(filepath);
     }
 
@@ -34,9 +36,8 @@ public class BellmanFordEfficiency1 {
     }
 
     @Test
-    public void src_to_nodes1() {
-        int src = random.nextInt(graph.getSize());
-        graph.solveForOne(src, "2");
+    public void all_nodes() {
+        graph.solveForAll("2");
     }
 
     @Before
@@ -47,7 +48,7 @@ public class BellmanFordEfficiency1 {
     @After
     public void printAnalysis() {
         time = System.nanoTime() - time;
-        try (FileWriter writer = new FileWriter("src/test/bellmanFord_source_positive.csv", true)) {
+        try (FileWriter writer = new FileWriter("src/test/bellmanford_all_nodes_positive.csv", true)) {
             String data = "";
             data += graph.getSize() + "," + graph.getEdges() + "," + time + "\n";
             writer.write(data.toString());

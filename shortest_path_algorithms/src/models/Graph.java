@@ -110,11 +110,6 @@ public class Graph {
             }
         }
 
-        public void solveFloydWarshall() {
-            FloydWarshall floydWarshall = new FloydWarshall(adjList);
-            floydWarshall.solve(costs, predecessor);
-        }
-
         //check if the graph contains negative cycles
         public boolean containsCycles(String algorithm){
          if(algorithm.equals("1")) {
@@ -134,9 +129,18 @@ public class Graph {
             return costs[src][dest];
         }
 
+        public double getDistance(int dest) {
+            return costs1[dest];
+        }
+
         public double[] getDistanceToAllDest(int src) {
             return costs[src];
         }
+
+        public double[] getDistanceToAllDest() {
+            return costs1;
+        }
+
 
         public double[][] getAllCosts() {
             return costs;

@@ -1,4 +1,4 @@
-package test.correctness.dijkstra;
+package test.correctness.ForOne;
 
 import models.Graph;
 import org.junit.jupiter.api.Test;
@@ -15,71 +15,71 @@ public class DijkstraCorrectness1 {
 
     @Test
     void src_dst_cost1() {
-        graph.solveDijkstra(1);
-        assertEquals(3, graph.getDistance(1, 3));
+        graph.solveForOne(1, "1");
+        assertEquals(3, graph.getDistance(3));
     }
 
     @Test
     void src_dst_cost2() {
-        graph.solveDijkstra(1);
-        assertEquals(2, graph.getDistance(1, 2));
+        graph.solveForOne(1, "1");
+        assertEquals(2, graph.getDistance(2));
     }
 
     @Test
     void src_dst_cost3() {
-        graph.solveDijkstra(0);
-        assertEquals(5, graph.getDistance(0, 3));
+        graph.solveForOne(0, "1");
+        assertEquals(5, graph.getDistance(3));
     }
 
     @Test
     void src_dst_cost4() {
-        graph.solveDijkstra(0);
-        assertEquals(0, graph.getDistance(0, 0));
+        graph.solveForOne(0, "1");
+        assertEquals(0, graph.getDistance(0));
     }
 
     @Test
     void src_dst_cost5() {
-        graph.solveDijkstra(0);
-        assertEquals(5, graph.getDistance(0, 2));
+        graph.solveForOne(0, "1");
+        assertEquals(5, graph.getDistance(2));
     }
 
     @Test
     void src_dst_cost6() {
-        graph.solveDijkstra(3);
-        assertEquals(Double.MAX_VALUE, graph.getDistance(3, 0));
+        graph.solveForOne(3, "1");
+        assertEquals(Double.MAX_VALUE, graph.getDistance(0));
     }
 
     @Test
     void src_to_all_dst1() {
-        graph.solveDijkstra(0);
+        graph.solveForOne(0, "1");
         double[] expected = {0, 3, 5, 5};
-        assert Arrays.equals(expected, graph.getDistanceToAllDest(0));
+        assert Arrays.equals(expected, graph.getDistanceToAllDest());
     }
 
     @Test
     void src_to_all_dst2() {
-        graph.solveDijkstra(1);
+        graph.solveForOne(1, "1");
         double[] expected = {Double.MAX_VALUE, 0, 2, 3};
-        assert Arrays.equals(expected, graph.getDistanceToAllDest(1));
+        assert Arrays.equals(expected, graph.getDistanceToAllDest());
     }
 
     @Test
     void src_to_all_dst3() {
-        graph.solveDijkstra(2);
+        graph.solveForOne(2, "1");
         double[] expected = {Double.MAX_VALUE, Double.MAX_VALUE, 0, 1};
-        assert Arrays.equals(expected, graph.getDistanceToAllDest(2));
+        assert Arrays.equals(expected, graph.getDistanceToAllDest());
     }
 
     @Test
     void src_to_all_dst4() {
-        graph.solveDijkstra(3);
+        graph.solveForOne(3, "1");
         double[] expected = {Double.MAX_VALUE, Double.MAX_VALUE, Double.MAX_VALUE, 0};
-        assert Arrays.equals(expected, graph.getDistanceToAllDest(3));
+        assert Arrays.equals(expected, graph.getDistanceToAllDest());
     }
 
     @Test
     void all_nodes_to_all_nodes() {
-        graph.solveDijkstraAll();
+        graph.solveForAll("1");
         double[][] expected = {
                 {0, 3, 5, 5},
                 {Double.MAX_VALUE, 0, 2, 3},
@@ -91,7 +91,7 @@ public class DijkstraCorrectness1 {
 
     @Test
     void path_src_dst() {
-        graph.solveDijkstra(0);
-        assertEquals("2->1->0", graph.getParents(0, 2));
+        graph.solveForOne(0, "1");
+        assertEquals("0-1-2", graph.getParents(0, 2));
     }
 }

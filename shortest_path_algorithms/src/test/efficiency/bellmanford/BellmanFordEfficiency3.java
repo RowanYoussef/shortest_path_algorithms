@@ -14,19 +14,19 @@ import java.io.IOException;
 import java.util.*;
 
 @RunWith(Parameterized.class)
-public class BellmanFordEfficiency1 {
+public class BellmanFordEfficiency3 {
     private final Graph graph;
     private final Random random = new Random();
     private long time;
 
-    public BellmanFordEfficiency1(String filepath) {
+    public BellmanFordEfficiency3(String filepath) {
         graph = new Graph(filepath);
     }
 
     @Parameterized.Parameters(name = "Graph size = {0}")
     public static Collection<Object[]> data() throws FileNotFoundException {
         List<Object[]> paths = new ArrayList<>();
-        Scanner scanner = new Scanner(new File("src/test/graphs/paths_positive.txt"));
+        Scanner scanner = new Scanner(new File("src/test/graphs/paths_negative.txt"));
         while (scanner.hasNextLine()) {
             paths.add(new Object[]{scanner.nextLine()});
         }
@@ -47,7 +47,7 @@ public class BellmanFordEfficiency1 {
     @After
     public void printAnalysis() {
         time = System.nanoTime() - time;
-        try (FileWriter writer = new FileWriter("src/test/bellmanFord_source_positive.csv", true)) {
+        try (FileWriter writer = new FileWriter("src/test/bellmanFord_source_negative.csv", true)) {
             String data = "";
             data += graph.getSize() + "," + graph.getEdges() + "," + time + "\n";
             writer.write(data.toString());

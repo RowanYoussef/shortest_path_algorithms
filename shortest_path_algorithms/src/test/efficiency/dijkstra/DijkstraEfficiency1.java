@@ -36,35 +36,11 @@ public class DijkstraEfficiency1 {
     @Test(timeout = 1000)
     public void src_to_nodes1() {
         int src = random.nextInt(graph.getSize());
-        graph.solveDijkstra(src);
-    }
-
-    @Test(timeout = 1000)
-    public void src_to_nodes2() {
-        int src = random.nextInt(graph.getSize());
-        graph.solveDijkstra(src);
-    }
-
-    @Test(timeout = 1000)
-    public void src_to_nodes3() {
-        int src = random.nextInt(graph.getSize());
-        graph.solveDijkstra(src);
-    }
-
-    @Test(timeout = 1000)
-    public void src_to_nodes4() {
-        int src = random.nextInt(graph.getSize());
-        graph.solveDijkstra(src);
-    }
-
-    @Test(timeout = 1000)
-    public void src_to_nodes5() {
-        int src = random.nextInt(graph.getSize());
-        graph.solveDijkstra(src);
+        graph.solveForOne(src, "1");
     }
 
     @Before
-    public void batchInsertAll() {
+    public void beforeEach() {
         time = System.nanoTime();
     }
 

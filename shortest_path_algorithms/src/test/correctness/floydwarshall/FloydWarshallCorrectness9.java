@@ -10,6 +10,6 @@ public class FloydWarshallCorrectness9 {
 
     @Test
     void has_negative_cycle() {
-        assertTrue(graph.containsCyclesFloydWarshall());
+        assertTrue(graph.containsCycles("3"));
     }
 }

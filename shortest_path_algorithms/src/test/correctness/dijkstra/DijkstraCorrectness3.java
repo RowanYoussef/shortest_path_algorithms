@@ -13,73 +13,73 @@ public class DijkstraCorrectness3 {
 
     @Test
     void src_dst_cost1() {
-        graph.solveDijkstra(0);
-        assertEquals(110, graph.getDistance(0, 6));
+        graph.solveForOne(0, "1");
+        assertEquals(110, graph.getDistance(6));
     }
 
     @Test
     void src_dst_cost2() {
-        graph.solveDijkstra(0);
-        assertEquals(50, graph.getDistance(0, 4));
+        graph.solveForOne(0, "1");
+        assertEquals(50, graph.getDistance(4));
     }
 
     @Test
     void src_dst_cost3() {
-        graph.solveDijkstra(5);
-        assertEquals(270, graph.getDistance(5, 1));
+        graph.solveForOne(5, "1");
+        assertEquals(270, graph.getDistance(1));
     }
 
     @Test
     void src_dst_cost4() {
-        graph.solveDijkstra(4);
-        assertEquals(540, graph.getDistance(4, 0));
+        graph.solveForOne(4, "1");
+        assertEquals(540, graph.getDistance(0));
     }
 
     @Test
     void src_to_all_dst1() {
-        graph.solveDijkstra(0);
+        graph.solveForOne(0, "1");
         double[] expected = {0.0, 30.0, 40.0, 60.0, 50.0, 140.0, 110.0, Double.MAX_VALUE};
-        assert Arrays.equals(expected, graph.getDistanceToAllDest(0));
+        assert Arrays.equals(expected, graph.getDistanceToAllDest());
     }
 
     @Test
     void src_to_all_dst2() {
-        graph.solveDijkstra(1);
+        graph.solveForOne(1, "1");
         double[] expected = {90.0, 0.0, 130.0, 50.0, 20.0, 230.0, 100.0, Double.MAX_VALUE};
-        assert Arrays.equals(expected, graph.getDistanceToAllDest(1));
+        assert Arrays.equals(expected, graph.getDistanceToAllDest());
     }
 
     @Test
     void src_to_all_dst3() {
-        graph.solveDijkstra(2);
+        graph.solveForOne(2, "1");
         double[] expected = {60.0, 90.0, 0.0, 20.0, 80.0, 100.0, 70.0, Double.MAX_VALUE};
-        assert Arrays.equals(expected, graph.getDistanceToAllDest(2));
+        assert Arrays.equals(expected, graph.getDistanceToAllDest());
     }
 
     @Test
     void src_to_all_dst4() {
-        graph.solveDijkstra(3);
+        graph.solveForOne(3, "1");
         double[] expected = {40.0, 70.0, 80.0, 0.0, 60.0, 180.0, 50.0, Double.MAX_VALUE};
-        assert Arrays.equals(expected, graph.getDistanceToAllDest(3));
+        assert Arrays.equals(expected, graph.getDistanceToAllDest());
     }
 
     @Test
     void src_to_all_dst5() {
-        graph.solveDijkstra(5);
+        graph.solveForOne(5, "1");
         double[] expected = {240.0, 270.0, 280.0, 200.0, 260.0, 0.0, 250.0, Double.MAX_VALUE};
-        assert Arrays.equals(expected, graph.getDistanceToAllDest(5));
+        assert Arrays.equals(expected, graph.getDistanceToAllDest());
     }
 
     @Test
     void src_to_all_dst6() {
-        graph.solveDijkstra(7);
+        graph.solveForOne(7, "1");
         double[] expected = {360.0, 390.0, 400.0, 320.0, 380.0, 120.0, 370.0, 0.0};
-        assert Arrays.equals(expected, graph.getDistanceToAllDest(7));
+        assert Arrays.equals(expected, graph.getDistanceToAllDest());
     }
 
     @Test
     void all_nodes_to_all_nodes() {
-        graph.solveDijkstraAll();
+        graph.solveForAll("1");
         double[][] expected = {
                 {0.0, 30.0, 40.0, 60.0, 50.0, 140.0, 110.0, Double.MAX_VALUE},
                 {90.0, 0.0, 130.0, 50.0, 20.0, 230.0, 100.0, Double.MAX_VALUE},
@@ -95,26 +95,26 @@ public class DijkstraCorrectness3 {
 
     @Test
     void path_src_dst1() {
-        graph.solveDijkstra(0);
-        assertEquals("6->3->2->0", graph.getParents(0, 6));
+        graph.solveForOne(0, "1");
+        assertEquals("0-2-3-6", graph.getParents(0, 6));
     }
 
     @Test
     void path_src_dst2() {
-        graph.solveDijkstra(3);
-        assertEquals("5->2->0->3", graph.getParents(3, 5));
+        graph.solveForOne(3, "1");
+        assertEquals("3-0-2-5", graph.getParents(3, 5));
     }
 
     @Test
     void path_src_dst3() {
-        graph.solveDijkstra(1);
-        assertEquals("2->0->3->1", graph.getParents(1, 2));
+        graph.solveForOne(1, "1");
+        assertEquals("1-3-0-2", graph.getParents(1, 2));
     }
 
     @Test
     void path_src_dst4() {
-        graph.solveDijkstra(4);
-        assertEquals("0->3->5->4", graph.getParents(4, 0));
+        graph.solveForOne(4, "1");
+        assertEquals("4-5-3-0", graph.getParents(4, 0));
 
     }
 }
