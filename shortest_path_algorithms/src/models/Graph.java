@@ -109,10 +109,12 @@ public class Graph {
         //check if the graph contains negative cycles
         public boolean containsCycles(String algorithm){
          if(algorithm.equals("1")) {
+             initArrays1();
              BellmanFord b = new BellmanFord(adjList);
              return !(b.solveBellmanFord(0, predecessor1, costs1));
          }
          else  {
+             initArrays();
              FloydWarshall f = new FloydWarshall(adjList);
              return !(f.solve(costs,predecessor));
          }
