@@ -101,7 +101,7 @@ public class BellmanFordCorrectness2 {
     @Test
     void path_src_dst2() {
         graph.solveForOne(3, "2");
-        assertEquals("3-4-5", graph.getParents(3, 5));
+        assertEquals("3-2-5", graph.getParents(3, 5));
     }
 
     @Test

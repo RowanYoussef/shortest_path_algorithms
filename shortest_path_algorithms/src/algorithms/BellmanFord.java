@@ -13,51 +13,59 @@ public class BellmanFord {
     }
 
     public boolean solveBellmanFordAll(int src, int[][] parent, double[][] cost) {
-        init(cost,parent,src);
         int v = adjList.length;
+        double [] previous = new double[v];
+        init(cost,parent,src,previous);
         for (int i = 0; i < v - 1; i++) {
             for (int j = 0; j < v; j++) {
                 for (Edge edge : adjList[j]) {
                     int node = edge.getDest();
                     double nodeCost = edge.getCost();
-                    if (cost[src][j] != Double.MAX_VALUE && nodeCost + cost[src][j] < cost[src][node]) {
+                    if (previous [j] != Double.MAX_VALUE && nodeCost + previous[j] < cost[src][node]) {
                         cost[src][node] = nodeCost + cost[src][j];
                         parent[src][node] = j;
                     }
                 }
             }
+            previous = cost[src].clone();
         }
-        return !(negativeCycle(cost,parent));
+        return !(negativeCycle(cost[src],parent[src]));
     }
 
     public boolean solveBellmanFord(int src, int[] parent, double[] cost) {
-        init(cost,parent,src);
         int v = adjList.length;
+        double [] previous = new double[v];
+        init(cost,parent,src,previous);
         for (int i = 0; i < v - 1; i++) {
             for (int j = 0; j < v; j++) {
                 for (Edge edge : adjList[j]) {
                     int node = edge.getDest();
                     double nodeCost = edge.getCost();
-                    if (cost[j] != Double.MAX_VALUE && nodeCost + cost[j] < cost[node]) {
+                    if (previous[j] != Double.MAX_VALUE && nodeCost + previous[j] < cost[node]) {
                         cost[node] = nodeCost + cost[j];
                         parent[node] = j;
                     }
                 }
             }
+            previous = cost.clone();
         }
         return !(negativeCycle(cost,parent));
     }
 
     //initialize arrays
-    private void init(double[][] cost,int[][] parent,int src){
+    private void init(double[][] cost,int[][] parent,int src,double [] previous){
+        Arrays.fill(previous,Double.MAX_VALUE);
         Arrays.fill(cost[src],Double.MAX_VALUE);
         Arrays.fill(parent[src],-1);
+        previous[src] = 0;
         cost[src][src] = 0;
     }
 
-    private void init(double[] cost,int[] parent,int src){
+    private void init(double[] cost,int[] parent,int src,double[] previous){
+        Arrays.fill(previous,Double.MAX_VALUE);
         Arrays.fill(cost,Double.MAX_VALUE);
         Arrays.fill(parent,-1);
+        previous[src] = 0;
         cost[src] = 0;
     }
     //check of the graph contains negative cycles
